@@ -21,9 +21,10 @@ int _printf(const char *format, ...)
 	{
 		c = format[i];
 		c1 = format[i + 1];
-
-		if (c != ' '){
-			
+		if (c == '%' && c1 == ' ')
+		{
+			continue;
+		}
 			if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
 			{
 				c_count += print_arg(&args, c1);
