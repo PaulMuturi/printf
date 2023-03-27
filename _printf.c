@@ -21,16 +21,20 @@ int _printf(const char *format, ...)
 	{
 		c = format[i];
 		c1 = format[i + 1];
-		if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
-		{
-			c_count += print_arg(&args, c1);
-			if (c1 != '%')
-				i++;
-		}
-		else
-		{
-			write(1, &c, 1);
-			c_count++;
+
+		if (c != ' '){
+			
+			if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
+			{
+				c_count += print_arg(&args, c1);
+				if (c1 != '%')
+					i++;
+			}
+			else
+			{
+				write(1, &c, 1);
+				c_count++;
+			}
 		}
 	}
 	va_end(args);
