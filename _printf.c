@@ -10,7 +10,7 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int c_count = 0, i;
-	char c;
+	char c, c1;
 
 	va_start(args, format);
 
@@ -20,11 +20,12 @@ int _printf(const char *format, ...)
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		c = format[i];
-
-		if (c == '%')
+		c1 = format[i + 1];
+		if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
 		{
-			c_count += print_arg(&args, format[i + 1]);
-			i++;
+			c_count += print_arg(&args, c1);
+			if (c1 != '%')
+				i++;
 		}
 		else
 		{
