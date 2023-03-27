@@ -23,18 +23,14 @@ int _printf(const char *format, ...)
 			c = '%';
 		else
 			c = format[i];
-
 		c1 = format[i + 1];
-
 		if (c1 == ' ' && c == '%')
 		{
 			is_space = 1;
 			continue;
 		}
-
 		is_space = 0;
-
-		if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
+		if (c == '%' && format(c1))
 		{
 			c_count += print_arg(&args, c1);
 			if (c1 != '%')
@@ -50,6 +46,28 @@ int _printf(const char *format, ...)
 	return (c_count);
 }
 /**
+ * format - chaecks if c1 is a valid specifier
+ * @c1: character to check
+ * Return: True or False
+ */
+
+int format(char c1)
+{
+	int n = 0;
+
+	if (c1 == 'c')
+		n = 1;
+	if (c1 == 's')
+		n = 1;
+	if (c1 == 'd')
+		n = 1;
+	if (c1 == 'i')
+		n = 1;
+	if (c1 == '%')
+		n = 1;
+	return (n);
+}
+/**
  * print_arg -prints the content of an argument
  * @args: pointer to args list
  * @c: type sepcifier
@@ -58,6 +76,7 @@ int _printf(const char *format, ...)
 int print_arg(va_list *args, char c)
 {
 	int i;
+	int n;
 	int num = 0;
 	char *s;
 	char ch;
@@ -77,6 +96,17 @@ int print_arg(va_list *args, char c)
 			write(1, s, sizeof(char));
 			num = num + 1;
 			s++;
+		}
+	}
+	if (c == 'd' || c == 'i')
+	{
+		n = va_arg(args, int);
+		write(1, &n, sizeof(int));
+
+		while (n != 0)
+		{
+			n = n / 10;
+			num++;
 		}
 	}
 	return (num);
