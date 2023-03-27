@@ -9,7 +9,7 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int c_count = 0, i;
+	int c_count = 0, i, is_space = 0;
 	char c, c1;
 
 	va_start(args, format);
@@ -19,23 +19,31 @@ int _printf(const char *format, ...)
 
 	for (i = 0; format[i] != '\0'; i++)
 	{
-		c = format[i];
+		if (is_space)
+			c = '%';
+		else
+			c = format[i];
+
 		c1 = format[i + 1];
-		if (c == '%' && c1 == ' ')
+
+		if (c1 == ' ' && c == '%')
 		{
+			is_space = 1;
 			continue;
 		}
-			if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
-			{
-				c_count += print_arg(&args, c1);
-				if (c1 != '%')
-					i++;
-			}
-			else
-			{
-				write(1, &c, 1);
-				c_count++;
-			}
+
+		is_space = 0;
+
+		if (c == '%' && (c1 == 'c' || c1 == 's' || c1 == '%'))
+		{
+			c_count += print_arg(&args, c1);
+			if (c1 != '%')
+				i++;
+		}
+		else
+		{
+			write(1, &c, 1);
+			c_count++;
 		}
 	}
 	va_end(args);
