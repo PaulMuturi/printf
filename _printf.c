@@ -1,5 +1,6 @@
 #include "main.h"
-
+int spformat(char);
+int print_reverse(int);
 /**
   *_printf - Produces output according to a format
   *@format: Character string
@@ -30,7 +31,7 @@ int _printf(const char *format, ...)
 			continue;
 		}
 		is_space = 0;
-		if (c == '%' && format(c1))
+		if (c == '%' && spformat(c1))
 		{
 			c_count += print_arg(&args, c1);
 			if (c1 != '%')
@@ -46,12 +47,12 @@ int _printf(const char *format, ...)
 	return (c_count);
 }
 /**
- * format - chaecks if c1 is a valid specifier
+ * spformat - chaecks if c1 is a valid specifier
  * @c1: character to check
  * Return: True or False
  */
 
-int format(char c1)
+int spformat(char c1)
 {
 	int n = 0;
 
@@ -100,14 +101,38 @@ int print_arg(va_list *args, char c)
 	}
 	if (c == 'd' || c == 'i')
 	{
-		n = va_arg(args, int);
-		write(1, &n, sizeof(int));
+		n = va_arg(*args, int);
 
-		while (n != 0)
-		{
-			n = n / 10;
-			num++;
-		}
+		num = num + print_reverse(n);
 	}
 	return (num);
+}
+
+int print_reverse(int n)
+{
+	char m;
+	int j = 0;
+	char neg;
+
+	if (n < 0)
+		neg = '-';
+
+	n = abs(n);
+
+	if ((int)(n / 10) == 0)
+	{
+		if (neg)
+			write(1, &neg, sizeof(char));
+
+		m = (n + '0');
+		write(1, &m, sizeof(char));
+		j++;
+	}
+	else
+	{
+		print_reverse(n / 10);
+	}
+
+	return (j);
+	
 }
