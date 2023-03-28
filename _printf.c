@@ -1,6 +1,8 @@
 #include "main.h"
 int spformat(char);
 int print_reverse(int);
+int _pow(int, int);
+int print_int(int n);
 /**
   *_printf - Produces output according to a format
   *@format: Character string
@@ -102,37 +104,55 @@ int print_arg(va_list *args, char c)
 	if (c == 'd' || c == 'i')
 	{
 		n = va_arg(*args, int);
-
-		num = num + print_reverse(n);
+		num = num + print_int(n);
 	}
+
 	return (num);
 }
 
-int print_reverse(int n)
+int print_int(int n)
 {
-	char m;
-	int j = 0;
+	int dgtcount = 0, num = 0, m, i;
 	char neg;
 
 	if (n < 0)
+	{
 		neg = '-';
+		write(1, &neg, sizeof(char));
+		num++;
+	}
 
 	n = abs(n);
+	m = n;
 
-	if ((int)(n / 10) == 0)
+	while (m != 0)
 	{
-		if (neg)
-			write(1, &neg, sizeof(char));
+		m = m / 10;
+		dgtcount++;
+	}
 
-		m = (n + '0');
+	for (i = 0; i < dgtcount; i++)
+	{
+		m = n / ((_pow(10, (dgtcount - i)) / 10));
+		m = m + '0';
 		write(1, &m, sizeof(char));
-		j++;
-	}
-	else
-	{
-		print_reverse(n / 10);
+
+		n = n % ((_pow(10, (dgtcount - i)) / 10));
+		num++;
 	}
 
-	return (j);
-	
+	return (num);
+
+}
+
+int _pow(int a, int b)
+{
+	int i, res = 1;
+
+	for (i = 0; i < b; i++)
+	{
+		res = res * a;
+	}
+
+	return (res);
 }
