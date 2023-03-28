@@ -64,6 +64,8 @@ int spformat(char c1)
 		n = 1;
 	if (c1 == '%')
 		n = 1;
+	if (c1 == 'b')
+		n = 1;
 	return (n);
 }
 /**
@@ -101,6 +103,11 @@ int print_arg(va_list *args, char c)
 	{
 		n = va_arg(*args, int);
 		num = num + print_int(n);
+	}
+	if (c == 'b')
+	{
+		n = va_arg(*args, int);
+		num = print_bin(n);
 	}
 
 	return (num);
