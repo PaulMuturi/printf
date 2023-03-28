@@ -1,8 +1,4 @@
 #include "main.h"
-int spformat(char);
-int print_reverse(int);
-int _pow(int, int);
-int print_int(int n);
 /**
   *_printf - Produces output according to a format
   *@format: Character string
@@ -109,7 +105,12 @@ int print_arg(va_list *args, char c)
 
 	return (num);
 }
-
+/**
+ * print_int - converts a number into string and prints
+ * it and it counts the number of elements in the number
+ * @n: the number to be converted
+ * Return: returns the number of elements in the number
+ */
 int print_int(int n)
 {
 	int dgtcount = 0, num = 0, m, i;
@@ -142,9 +143,13 @@ int print_int(int n)
 	}
 
 	return (num);
-
 }
-
+/**
+ * _pow - takes two numbers and finds the power according to the ars
+ * @a: the the power
+ * @b: the the number to compare
+ * Return: returns the power
+ */
 int _pow(int a, int b)
 {
 	int i, res = 1;
