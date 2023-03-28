@@ -20,13 +20,16 @@ int _printf(const char *format, ...)
 	{
 		if (is_space)
 			c = '%';
+		/*
 		else
 			c = format[i];
+		 */
+		c = format[i];
 		c1 = format[i + 1];
 		if (c1 == ' ' && c == '%')
 		{
 			is_space = 1;
-			continue;
+			/*continue;*/
 		}
 		is_space = 0;
 		if (c == '%' && spformat(c1))
