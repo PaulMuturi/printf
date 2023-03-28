@@ -15,7 +15,7 @@ int _printf(const char *format, ...)
 
 	if (!(format && *format))
 		return (0);
-
+	printf("\n----------------------------------\n");
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (is_space)
@@ -45,6 +45,7 @@ int _printf(const char *format, ...)
 		}
 	}
 	va_end(args);
+	printf("Printed characters: %d\n", c_count);
 	return (c_count);
 }
 /**
