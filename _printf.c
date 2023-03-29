@@ -79,8 +79,7 @@ int spformat(char c1)
 int print_arg(va_list *args, char c)
 {
 	int i, n, num = 0;
-	char *s, ch, neg = '-';
-	unsigned int ui;
+	char *s, ch, neg;
 
 	if (c == 'c')
 	{
@@ -104,13 +103,8 @@ int print_arg(va_list *args, char c)
 	{
 		n = va_arg(*args, int);
 		if (n < 0)
-		{
-			write(1, &neg, sizeof(char));
-			num++;
-		}
-		printf("before passing: %d\n", abs(n));
-		ui = (unsigned int)(abs(n));	
-		num = num + print_int(ui);
+			neg = '-';
+		num = num + print_int((size_t)n, neg);
 	}
 	if (c == 'b')
 	{
@@ -128,15 +122,22 @@ int print_arg(va_list *args, char c)
 /**
  * print_int - converts a number into string and prints
  * it and it counts the number of elements in the number
+ *@neg: holds character '-' if n was a negative number
  * @n: the number to be converted
  * Return: Returns the number of elements in the number
  */
-int print_int(unsigned int n)
+int print_int(size_t n, char neg)
 {
 	int dgtcount = 0, num = 0, i;
-	unsigned int m;
+	size_t m;
 
-	printf("val n: %d\n", n);
+	if (neg)
+	{
+		neg = '-';
+		write(1, &neg, sizeof(char));
+		num++;
+	}
+
 	m = n;
 	while (m != 0)
 	{
@@ -147,7 +148,6 @@ int print_int(unsigned int n)
 	for (i = 0; i < dgtcount; i++)
 	{
 		m = n / ((_pow(10, (dgtcount - i)) / 10));
-		printf("val m: %d\n", m);
 		m = m + '0';
 		write(1, &m, sizeof(char));
 
@@ -163,10 +163,10 @@ int print_int(unsigned int n)
  * @b: the the number to compare
  * Return: returns the power
  */
-int _pow(unsigned int a, int b)
+size_t _pow(size_t a, int b)
 {
 	int i;
-	unsigned res = 1;
+	size_t res = 1;
 
 	for (i = 0; i < b; i++)
 	{
