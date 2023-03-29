@@ -12,10 +12,10 @@ int _printf(const char *format, ...)
 	char c, c1;
 
 	va_start(args, format);
-	if (format == NULL || !(*format))
-	{
+	if (format == NULL)
+		return (-1);
+	if (!(*format))
 		return (0);
-	}
 
 	for (i = 0; format[i] != '\0'; i++)
 	{
@@ -39,7 +39,7 @@ int _printf(const char *format, ...)
 		else
 		{
 			if ((c == '%') && (c1 == '\0'))
-				return (c_count);
+				return (-1);
 			write(1, &c, 1);
 			c_count++;
 		}
