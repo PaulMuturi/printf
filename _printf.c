@@ -15,21 +15,18 @@ int _printf(const char *format, ...)
 
 	if (!(format && *format))
 		return (0);
-	printf("\n----------------------------------\n");
+
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (is_space)
 			c = '%';
-		/*
 		else
 			c = format[i];
-		 */
-		c = format[i];
 		c1 = format[i + 1];
 		if (c1 == ' ' && c == '%')
 		{
 			is_space = 1;
-			/*continue;*/
+			continue;
 		}
 		is_space = 0;
 		if (c == '%' && spformat(c1))
@@ -45,7 +42,6 @@ int _printf(const char *format, ...)
 		}
 	}
 	va_end(args);
-	printf("Printed characters: %d\n", c_count);
 	return (c_count);
 }
 /**
