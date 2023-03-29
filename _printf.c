@@ -91,7 +91,10 @@ int print_arg(va_list *args, char c)
 	if (c == 's')
 	{
 		s = va_arg(*args, char *);
-
+		if (s == NULL)
+		{
+			s = "(null)";
+		}
 		for (i = 0; *s != '\0'; i++)
 		{
 			write(1, s, sizeof(char));
