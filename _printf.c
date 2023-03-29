@@ -14,8 +14,6 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	if (format == NULL)
 		return (-1);
-	if (!(*format))
-		return (0);
 
 	for (i = 0; format[i] != '\0'; i++)
 	{
@@ -128,6 +126,12 @@ int print_int(int n)
 	int dgtcount = 0, num = 0, m, i;
 	char neg;
 
+	if (n == 0)
+	{
+		n = n + '0';
+		write(1, &n, sizeof(char));
+		return (++num);
+	}
 	if (n < 0)
 	{
 		neg = '-';
