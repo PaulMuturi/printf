@@ -116,7 +116,7 @@ int print_arg(va_list *args, char c)
  * print_int - converts a number into string and prints
  * it and it counts the number of elements in the number
  * @n: the number to be converted
- * Return: returns the number of elements in the number
+ * Return: Returns the number of elements in the number
  */
 int print_int(int n)
 {
