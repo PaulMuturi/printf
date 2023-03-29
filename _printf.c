@@ -32,8 +32,7 @@ int _printf(const char *format, ...)
 		if (c == '%' && spformat(c1))
 		{
 			c_count += print_arg(&args, c1);
-			if (c1 != '%')
-				i++;
+			i++;
 		}
 		else
 		{
@@ -112,7 +111,12 @@ int print_arg(va_list *args, char c)
 		n = va_arg(*args, int);
 		num = print_bin(n);
 	}
-
+	if (c == '%')
+	{
+		ch = '%';
+		write(1, &ch, sizeof(char));
+		num++;
+	}
 	return (num);
 }
 /**
