@@ -129,19 +129,14 @@ int print_int(size_t n, char neg)
 	int dgtcount = 0, num = 0, i;
 	size_t m;
 
-<<<<<<< HEAD
-	if (neg)
-=======
 	if (n == 0)
 	{
 		n = n + '0';
 		write(1, &n, sizeof(char));
 		return (++num);
 	}
-	if (n < 0)
->>>>>>> 9e88beb1ce0622d8395447f3da4f53068a95b2b9
+	if (neg)
 	{
-		neg = '-';
 		write(1, &neg, sizeof(char));
 		num++;
 	}
