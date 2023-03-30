@@ -2,9 +2,10 @@
 /**
  * print_bin - converts a number into binary and prints it
  * @b: number to convert
+ * @l: pointer to a values of the return value:
  * Return: returns the number of elements printed
  */
-int print_bin(long int b)
+int print_bin(long int b, int *l)
 {
 	long int n;
 	char c;
@@ -15,7 +16,9 @@ int print_bin(long int b)
 	}
 	n = b % 2;
 	b = b / 2;
-	c = (char)n;
+	c = n + '0';
+	*l = *l + 1;
+	print_bin(b, l);
 	write(1, &c, sizeof(char));
-	return (1 + print_bin(b));
+	return (*l);
 }

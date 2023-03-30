@@ -76,7 +76,7 @@ int spformat(char c1)
  */
 int print_arg(va_list *args, char c)
 {
-	int i, num = 0;
+	int i, z = 0, num = 0;
 	long int n;
 	char *s, ch, neg = ' ';
 
@@ -106,7 +106,7 @@ int print_arg(va_list *args, char c)
 	if (c == 'b')
 	{
 		n = (long int)va_arg(*args, int);
-		num = print_bin(n);
+		num = print_bin(n, &z);
 	}
 	if (c == '%')
 	{
