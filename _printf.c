@@ -77,7 +77,7 @@ int spformat(char c1)
 int print_arg(va_list *args, char c)
 {
 	int i, n, num = 0;
-	char *s, ch, neg;
+	char *s, ch, neg = ' ';
 
 	if (c == 'c')
 	{
@@ -102,7 +102,7 @@ int print_arg(va_list *args, char c)
 		n = va_arg(*args, int);
 		if (n < 0)
 			neg = '-';
-		num = num + print_int((size_t)n, neg);
+		num = num + print_int((size_t)(abs(n)), neg);
 	}
 	if (c == 'b')
 	{
@@ -135,7 +135,7 @@ int print_int(size_t n, char neg)
 		write(1, &n, sizeof(char));
 		return (++num);
 	}
-	if (neg)
+	if (neg == '-')
 	{
 		write(1, &neg, sizeof(char));
 		num++;
