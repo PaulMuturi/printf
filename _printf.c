@@ -76,7 +76,8 @@ int spformat(char c1)
  */
 int print_arg(va_list *args, char c)
 {
-	int i, n, num = 0;
+	int i, num = 0;
+	long int n;
 	char *s, ch, neg = ' ';
 
 	if (c == 'c')
@@ -99,14 +100,12 @@ int print_arg(va_list *args, char c)
 	}
 	if (c == 'd' || c == 'i')
 	{
-		n = va_arg(*args, int);
-		if (n < 0)
-			neg = '-';
-		num = num + print_int((size_t)(abs(n)), neg);
+		n = (long int)va_arg(*args, int);
+		num = num + print_int((size_t)n, neg);
 	}
 	if (c == 'b')
 	{
-		n = va_arg(*args, int);
+		n = (long int)va_arg(*args, int);
 		num = print_bin(n);
 	}
 	if (c == '%')
@@ -124,10 +123,10 @@ int print_arg(va_list *args, char c)
  * @n: the number to be converted
  * Return: Returns the number of elements in the number
  */
-int print_int(size_t n, char neg)
+int print_int(long int n, char neg)
 {
 	int dgtcount = 0, num = 0, i;
-	size_t m;
+	size_t m, l;
 
 	if (n == 0)
 	{
@@ -135,13 +134,15 @@ int print_int(size_t n, char neg)
 		write(1, &n, sizeof(char));
 		return (++num);
 	}
-	if (neg == '-')
+	if (n < 0)
 	{
+		n = (n * -1);
+		neg = '-';
 		write(1, &neg, sizeof(char));
 		num++;
 	}
-
-	m = n;
+	l = (size_t)n;
+	m = l;
 	while (m != 0)
 	{
 		m = m / 10;
@@ -150,11 +151,11 @@ int print_int(size_t n, char neg)
 
 	for (i = 0; i < dgtcount; i++)
 	{
-		m = n / ((_pow(10, (dgtcount - i)) / 10));
+		m = l / ((_pow(10, (dgtcount - i)) / 10));
 		m = m + '0';
 		write(1, &m, sizeof(char));
 
-		n = n % ((_pow(10, (dgtcount - i)) / 10));
+		l = l % ((_pow(10, (dgtcount - i)) / 10));
 		num++;
 	}
 

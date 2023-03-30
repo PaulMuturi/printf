@@ -4,9 +4,9 @@
  * @b: number to convert
  * Return: returns the number of elements printed
  */
-int print_bin(int b)
+int print_bin(long int b)
 {
-	int n;
+	long int n;
 	char c;
 
 	if (b == 0)
